@@ -6,6 +6,7 @@ import math
 import numpy
 import threading 
 import random
+import sys 
 
 # COLORS
 BOID_COLOR = (255, 255, 255)
