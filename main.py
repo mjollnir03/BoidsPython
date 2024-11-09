@@ -3,7 +3,7 @@ from boid import Boid
 
 # Initialize the boid at the center
 agent1Position = (WIDTH // 2, HEIGHT // 2)
-agent1 = Boid(25, (255, 0, 0), agent1Position)
+agent1 = Boid(50, BOID_COLOR, agent1Position)
 
 # FPS Counter surface
 def get_fps() -> str:
@@ -11,10 +11,10 @@ def get_fps() -> str:
 
 def get_user_input(keys, agent: Boid) -> None:
     if keys[pygame.K_w]:  # Increase speed (forward)
-        agent.speed = min(agent.speed + 0.1, 5)  # Max speed of 5
+        agent.set_speed(min(agent.get_speed() + 0.1, 5))  # Max speed of 5
         
     if keys[pygame.K_s]:  # Decrease speed (reverse)
-        agent.speed = max(agent.speed - 0.1, -3)  # Max reverse speed of -3
+        agent.set_speed(max(agent.get_speed() - 0.1, -3))  # Max reverse speed of -3
         
     if keys[pygame.K_a]:  # Rotate left
         agent.update_angle(-3)  # Rotate left by 3 degrees
