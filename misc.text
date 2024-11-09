@@ -12,7 +12,6 @@
 # Resources Used
 - https://vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html
 
-
-
-# To Do Next
-- Boid should point towards the direction they are moving
+# Notes to self
+- Vector.rotate() rotates counter clockwise
+- pygame.transform.rotate() rotates counter-clockwise
