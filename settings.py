@@ -11,10 +11,14 @@ from pygame.math import Vector2
 
 # PYGAME INIT
 pygame.init()
+pygame.font.init()
 
 # COLORS
 BOID_COLOR = (255, 255, 255)
 SCREEN_BACKGROUND_COLOR = (0, 0, 0)
+
+# FONTS
+FPS_FONT = pygame.font.SysFont("Arial" , 18 )
 
 # DISPLAY SETUP
 pygame.display.set_caption("Flocking Simulation") 
