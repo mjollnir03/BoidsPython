@@ -2,7 +2,7 @@
 from settings import *
 
 class Boid:
-    def __init__(self, size: int, color: Tuple[int, int, int], position: List[int]):
+    def __init__(self, size: int, color: Tuple[int, int, int], position: Tuple[float, float]):
         self.angle = 0
         self.size = size
         self.color = color
@@ -42,5 +42,14 @@ class Boid:
         # Draw the rotated surface to the screen
         screen.blit(rotated_surface, rotated_rect)
 
-        # Optional: draw a rectangle outline around the boid for debugging
-        pygame.draw.rect(screen, (0, 255, 0), rotated_rect, 1)
+        # Optional : For Debugging
+        #pygame.draw.rect(screen, (0, 255, 0), rotated_rect, 1)
+        
+
+
+    def display_boid_metrics(self) -> None:
+        print(f"Current Angle: {self.angle}")
+        print(f"Current Direction: {self.direction}")
+        print(f"Current Position: {self.position}")
+        print(f"Current Speed: {self.speed}")
+        print()
