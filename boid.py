@@ -42,9 +42,18 @@ class Boid:
         # Draw the rotated surface to the screen
         screen.blit(rotated_surface, rotated_rect)
 
+        # Optional 
+        pygame.draw.rect(screen, (255, 0, 0), rotated_rect, 1)
+
     def display_boid_metrics(self) -> None:
         print(f"Current Angle: {self.__angle}")
         print(f"Current Direction: {self.__direction}")
         print(f"Current Position: {self.__position}")
         print(f"Current Speed: {self.__speed}")
         print()
+
+    def get_speed(self) -> int:
+        return self.__speed
+
+    def set_speed(self, speed) -> None:
+        self.__speed = speed
