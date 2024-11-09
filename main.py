@@ -2,8 +2,28 @@ from settings import *
 from boid import Boid
 
 # Initialize the boid at the center
-agent1Position = [WIDTH // 2, HEIGHT // 2]
+agent1Position = (WIDTH // 2, HEIGHT // 2)
 agent1 = Boid(25, (255, 0, 0), agent1Position)
+
+# FPS Counter surface
+def get_fps() -> str:
+    return FPS_FONT.render(f"FPS: {int(CLOCK.get_fps())}", 0, BOID_COLOR)
+
+def get_user_input(keys, agent: Boid) -> None:
+    if keys[pygame.K_w]:  # Increase speed (forward)
+        agent.speed = min(agent.speed + 0.1, 5)  # Max speed of 5
+        
+    if keys[pygame.K_s]:  # Decrease speed (reverse)
+        agent.speed = max(agent.speed - 0.1, -3)  # Max reverse speed of -3
+        
+    if keys[pygame.K_a]:  # Rotate left
+        agent.update_angle(-3)  # Rotate left by 3 degrees
+        
+    if keys[pygame.K_d]:  # Rotate right
+        agent.update_angle(3)  # Rotate right by 3 degrees
+        
+    #agent.display_boid_metrics()
+
 
 while True:
     for event in pygame.event.get():
@@ -18,16 +38,7 @@ while True:
                 HEIGHT = 400
             SCREEN = pygame.display.set_mode((WIDTH, HEIGHT), HWSURFACE | DOUBLEBUF | RESIZABLE)
 
-    # Control the boid's movement
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:  # Increase speed (forward)
-        agent1.speed = min(agent1.speed + 0.1, 5)  # Max speed of 5
-    if keys[pygame.K_s]:  # Decrease speed (reverse)
-        agent1.speed = max(agent1.speed - 0.1, -3)  # Max reverse speed of -3
-    if keys[pygame.K_a]:  # Rotate left
-        agent1.update_angle(-3)  # Rotate left by 3 degrees
-    if keys[pygame.K_d]:  # Rotate right
-        agent1.update_angle(3)  # Rotate right by 3 degrees
+    get_user_input(pygame.key.get_pressed(), agent1)
 
     # Update the boid's position based on speed and direction
     agent1.update_position()
@@ -37,6 +48,9 @@ while True:
 
     # Draw the boid
     agent1.draw_boid(SCREEN)
+
+    # Display FPS
+    SCREEN.blit(get_fps(), (0,0))
 
     # Update the display
     pygame.display.flip()
