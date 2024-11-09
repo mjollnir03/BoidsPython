@@ -15,7 +15,7 @@ pygame.font.init()
 
 # COLORS
 BOID_COLOR = (255, 255, 255)
-SCREEN_BACKGROUND_COLOR = (0, 0, 0)
+SCREEN_BACKGROUND_COLOR = (0,0,0)
 
 # FONTS
 FPS_FONT = pygame.font.SysFont("Arial" , 18 )
