@@ -10,4 +10,9 @@
 
 
 # Resources Used
-- https://vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html 
+- https://vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html
+
+
+
+# To Do Next
+- Boid should point towards the direction they are moving
