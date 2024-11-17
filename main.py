@@ -1,59 +1,50 @@
 from settings import *
 from boid import Boid
+from functions import *
+
 
 # Initialize the boid at the center
-agent1Position = (WIDTH // 2, HEIGHT // 2)
-agent1 = Boid(50, BOID_COLOR, agent1Position)
-
-# FPS Counter surface
-def get_fps() -> str:
-    return FPS_FONT.render(f"FPS: {int(CLOCK.get_fps())}", 0, BOID_COLOR)
-
-def get_user_input(keys, agent: Boid) -> None:
-    if keys[pygame.K_w]:  # Increase speed (forward)
-        agent.set_speed(min(agent.get_speed() + 0.1, 5))  # Max speed of 5
-        
-    if keys[pygame.K_s]:  # Decrease speed (reverse)
-        agent.set_speed(max(agent.get_speed() - 0.1, -3))  # Max reverse speed of -3
-        
-    if keys[pygame.K_a]:  # Rotate left
-        agent.update_angle(-3)  # Rotate left by 3 degrees
-        
-    if keys[pygame.K_d]:  # Rotate right
-        agent.update_angle(3)  # Rotate right by 3 degrees
-        
-    #agent.display_boid_metrics()
-
+agent1_position = (WIDTH // 2, HEIGHT // 2)
+agent1 = Boid(25, BOID_COLOR, agent1_position)
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        elif event.type == VIDEORESIZE:
+        elif event.type == pygame.VIDEORESIZE:
             WIDTH, HEIGHT = event.size  # Get new width and height from the resize event
             if WIDTH < 600:
                 WIDTH = 600
             if HEIGHT < 400:
                 HEIGHT = 400
-            SCREEN = pygame.display.set_mode((WIDTH, HEIGHT), HWSURFACE | DOUBLEBUF | RESIZABLE)
+            SCREEN = pygame.display.set_mode((WIDTH, HEIGHT), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
 
-    get_user_input(pygame.key.get_pressed(), agent1)
-
+    # Get user input and update Boid
+    keys = pygame.key.get_pressed()
+    get_user_input(keys, agent1)
+    
+    # Check for screen margins and adjust Boid's angle if necessary
+    check_screen_margin(agent1)
+    
     # Update the boid's position based on speed and direction
     agent1.update_position()
-
+    
     # Fill the screen with the background color
     SCREEN.fill(SCREEN_BACKGROUND_COLOR)
-
+    
     # Draw the boid
     agent1.draw_boid(SCREEN)
-
-    # Display FPS
-    SCREEN.blit(get_fps(), (0,0))
-
+    
+    
+    # Display FPS (assuming you have a function get_fps() defined)
+    SCREEN.blit(get_fps(), (0, 0))
+    
     # Update the display
     pygame.display.flip()
+    
 
+    WIDTH, HEIGHT = SCREEN.get_size()
+    
     # Limit the frame rate
     CLOCK.tick(60)
