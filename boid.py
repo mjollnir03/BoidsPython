@@ -1,5 +1,5 @@
-
-from settings import *
+from imports import *
+import settings
 
 class Boid:
     def __init__(self, size: int, color: Tuple[int, int, int], position: Tuple[float, float]):
