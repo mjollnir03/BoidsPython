@@ -1,4 +1,5 @@
-from settings import *
+from imports import * 
+import settings
 from boid import Boid
 
 
@@ -6,30 +7,30 @@ from boid import Boid
 Function to deter agents away from screen bounds automatically 
 ''' 
 def check_screen_margin(agent: Boid) -> None:
+    
     agent_pos = agent.get_position()
     agent_angle = agent.get_angle()
 
+    print(id(HEIGHT), id(WIDTH))
     # Check Top of Screen
-    print("Checking top of screen", agent_pos, agent_angle)
-    if int(agent_pos.y) < 50.0:
-        print("WE REACHED MARGIN")
-        
+    if int(agent_pos.y) < 50:   
         # if pointing up or right
-        if agent_angle >= 0 and  agent_angle <= 90:
+        if agent_angle >= 0 and  agent_angle <= 135:
             agent.update_angle(3)
-            print("Turning Right!")
 
         # If agent pointing left 
-            # agent.angle <= 0 and angent.angle >= 270
-            # rotate left agent.update_angle(-3)
-
-        # If agent pointing right
-            # agent.angle > 0 and agent.angle <= 90
-            # rotate left agent.update_angle(3)
-
-
+        elif agent_angle >= 225 and agent_angle < 360:
+            agent.update_angle(-3)
 
     # Check Bottom of Screen
+    if int(agent_pos.y) > (HEIGHT - 50):
+        # if pointing down or right
+        if agent_angle >= 45 and agent_angle <= 180:
+            agent.update_angle(-3)
+
+        # if pointing left
+        elif agent_angle <= 315 and agent_angle > 180:
+            agent.update_angle(3)
 
     # Check Left of Screen
 
