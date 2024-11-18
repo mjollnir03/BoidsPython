@@ -1,4 +1,5 @@
-from settings import *
+from imports import *
+import settings
 from boid import Boid
 from functions import *
 
@@ -7,18 +8,23 @@ from functions import *
 agent1_position = (WIDTH // 2, HEIGHT // 2)
 agent1 = Boid(25, BOID_COLOR, agent1_position)
 
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
         elif event.type == pygame.VIDEORESIZE:
+            
             WIDTH, HEIGHT = event.size  # Get new width and height from the resize event
             if WIDTH < 600:
                 WIDTH = 600
             if HEIGHT < 400:
                 HEIGHT = 400
             SCREEN = pygame.display.set_mode((WIDTH, HEIGHT), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+
+    WIDTH, HEIGHT = SCREEN.get_size()
+    print(id(HEIGHT) ,id(WIDTH))
 
     # Get user input and update Boid
     keys = pygame.key.get_pressed()
@@ -43,8 +49,8 @@ while True:
     # Update the display
     pygame.display.flip()
     
-
-    WIDTH, HEIGHT = SCREEN.get_size()
+    
+    
     
     # Limit the frame rate
     CLOCK.tick(60)
