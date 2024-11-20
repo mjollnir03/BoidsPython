@@ -24,7 +24,7 @@ class Boid:
             (0, self.__height)             # Bottom-left corner
         ]
 
-    def update_position(self) -> None:
+    def __update_position(self) -> None:
         # Update position based on the direction and speed
         self.__position += self.__direction * self.__speed
 
@@ -46,16 +46,17 @@ class Boid:
         self.__angle %= 360  # Keep angle within 0-359 degrees
         self.__direction = Vector2(0, -1).rotate(self.__angle)  # Update direction based on angle
 
-    def draw_boid(self, screen) -> None:
+    def draw_boid(self) -> None:
+        self.__update_position()
         # Rotate the base surface to match the current angle
-        rotated_surface = pygame.transform.rotate(self.__base_surface, -self.__angle)
-        rotated_rect = rotated_surface.get_rect(center=(self.__position.x, self.__position.y))
+        self.__rotated_surface = pygame.transform.rotate(self.__base_surface, -self.__angle)
+        self.__rotated_rect = self.__rotated_surface.get_rect(center=(self.__position.x, self.__position.y))
 
         # Draw the rotated surface to the screen
-        screen.blit(rotated_surface, rotated_rect)
+        settings.SCREEN.blit(self.__rotated_surface, self.__rotated_rect)
 
         # Optional: Draw a rectangle around the boid for debugging
-        pygame.draw.rect(screen, (255, 0, 0), rotated_rect, 1)
+        # pygame.draw.rect(settings.SCREEN, (255, 0, 0), self.__rotated_rect, 1)
 
     def display_boid_metrics(self) -> None:
         print(f"Current Angle: {self.__angle}")
