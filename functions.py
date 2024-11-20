@@ -11,32 +11,55 @@ def check_screen_margin(agent: Boid) -> None:
     agent_pos = agent.get_position()
     agent_angle = agent.get_angle()
 
-    print(id(HEIGHT), id(WIDTH))
     # Check Top of Screen
-    if int(agent_pos.y) < 50:   
+    if int(agent_pos.y) < settings.SCREEN_MARGIN:   
         # if pointing up or right
         if agent_angle >= 0 and  agent_angle <= 135:
             agent.update_angle(3)
+            return
 
         # If agent pointing left 
         elif agent_angle >= 225 and agent_angle < 360:
             agent.update_angle(-3)
+            return
 
     # Check Bottom of Screen
-    if int(agent_pos.y) > (HEIGHT - 50):
+    elif int(agent_pos.y) > (settings.HEIGHT - settings.SCREEN_MARGIN):
         # if pointing down or right
         if agent_angle >= 45 and agent_angle <= 180:
             agent.update_angle(-3)
+            return
 
         # if pointing left
         elif agent_angle <= 315 and agent_angle > 180:
             agent.update_angle(3)
+            return
 
     # Check Left of Screen
+    if int(agent_pos.x) < settings.SCREEN_MARGIN:
+        # if pointing left or up
+        if agent_angle >= 270 or agent_angle <= 45:
+            agent.update_angle(3)
+            return
 
-    # Check Right of Screen
+        # if pointing down
+        elif agent_angle < 270 and agent_angle >= 135:
+            agent.update_angle(-3)
+            return
     
-    pass
+    # Check Right of Screen
+    elif int(agent_pos.x) > (settings.WIDTH - settings.SCREEN_MARGIN):
+        # if pointing right or up
+        if agent_angle >= 315 or agent_angle <= 90:
+            agent.update_angle(-3)
+            return
+        # if pointing down
+        elif agent_angle <= 225 and agent_angle > 90:
+            agent.update_angle(3)
+            return
+        
+    
+    
 
 
 
@@ -48,7 +71,7 @@ def get_user_input(keys, agent: Boid) -> None:
         agent.set_speed(min(agent.get_speed() + 0.1, 5))  # Max speed of 5
         
     if keys[pygame.K_s]:  # Decrease speed (reverse)
-        agent.set_speed(max(agent.get_speed() - 0.1, 1))  # Max reverse speed of -3
+        agent.set_speed(max(agent.get_speed() - 0.1, 0.1))  # Minimum Speed is 0 (Stationary)
         
     if keys[pygame.K_a]:  # Rotate left
         agent.update_angle(-3)  # Rotate left by 3 degrees
@@ -64,4 +87,10 @@ Function to display FPS Count onto Screen
 '''
 # FPS Counter surface
 def get_fps() -> str:
-    return FPS_FONT.render(f"FPS: {int(CLOCK.get_fps())}", 0, BOID_COLOR)
+    return settings.FPS_FONT.render(f"FPS: {int(settings.CLOCK.get_fps())}", 0, settings.BOID_COLOR)
+
+
+'''
+Function to Check if Window Size is Beyond Allowed Minimum Limit
+'''
+def check_window_resize() -> None: ...
