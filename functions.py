@@ -2,7 +2,6 @@ from imports import *
 import settings
 from boid import Boid
 
-
 '''
 Function to deter agents away from screen bounds automatically 
 ''' 
@@ -58,10 +57,6 @@ def check_screen_margin(agent: Boid) -> None:
             agent.update_angle(3)
             return
         
-    
-    
-
-
 
 '''
 Function to give multi-directional movement to a specific agent
@@ -93,4 +88,11 @@ def get_fps() -> str:
 '''
 Function to Check if Window Size is Beyond Allowed Minimum Limit
 '''
-def check_window_resize() -> None: ...
+def check_window_resize(event) -> None:
+    settings.WIDTH, settings.HEIGHT = event.size  # Get new width and height from the resize event
+    if settings.WIDTH < 600:
+        settings.WIDTH = 600
+    if settings.HEIGHT < 400:
+        settings.HEIGHT = 400
+    settings.SCREEN = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+    

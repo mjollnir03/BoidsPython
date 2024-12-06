@@ -13,12 +13,7 @@ while True:
             pygame.quit()
             exit()
         elif event.type == pygame.VIDEORESIZE: 
-            settings.WIDTH, settings.HEIGHT = event.size  # Get new width and height from the resize event
-            if settings.WIDTH < 600:
-                settings.WIDTH = 600
-            if settings.HEIGHT < 400:
-                settings.HEIGHT = 400
-            settings.SCREEN = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+            check_window_resize(event)
 
     settings.WIDTH, settings.HEIGHT = settings.SCREEN.get_size()
 
@@ -35,7 +30,7 @@ while True:
     # Draw the boid
     agent1.draw_boid()
     
-    # Display FPS (assuming you have a function get_fps() defined)
+    # Display FPS 
     settings.SCREEN.blit(get_fps(), (0, 0))
     
     # Update the display

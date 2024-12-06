@@ -19,7 +19,7 @@ FPS_FONT = pygame.font.SysFont("Arial" , 18 )
 pygame.display.set_caption("Flocking Simulation") 
 DISPLAY_INFO = pygame.display.Info()
 
-SCREEN_MARGIN = 50
+SCREEN_MARGIN = 25
 
 WIDTH, HEIGHT = 640, 480
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT), HWSURFACE | DOUBLEBUF | RESIZABLE)
