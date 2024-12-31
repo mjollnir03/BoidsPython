@@ -5,7 +5,7 @@ from functions import *
 
 # Initialize the boid at the center
 agent1_position = (settings.WIDTH // 2, settings.HEIGHT // 2)
-agent1 = Boid(25,settings.BOID_COLOR, agent1_position)
+agent1 = Boid(15, settings.BOID_COLOR, agent1_position)
 
 while True:
     for event in pygame.event.get():

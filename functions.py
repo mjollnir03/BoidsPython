@@ -1,98 +1,96 @@
-from imports import * 
+from imports import *
 import settings
 from boid import Boid
 
-'''
-Function to deter agents away from screen bounds automatically 
-''' 
 def check_screen_margin(agent: Boid) -> None:
-    
+    ''' 
+    Adjusts the agent's angle to steer it away from the screen bounds.
+    This function detects if the agent is too close to the screen edges 
+    and modifies its angle based on its position and current direction.
+    '''
     agent_pos = agent.get_position()
     agent_angle = agent.get_angle()
 
     # Check Top of Screen
-    if int(agent_pos.y) < settings.SCREEN_MARGIN:   
-        # if pointing up or right
-        if agent_angle >= 0 and  agent_angle <= 135:
+    if int(agent_pos.y) < settings.SCREEN_MARGIN:
+        if agent_angle >= 0 and agent_angle <= 135:  # Pointing up or right
             agent.update_angle(3)
             return
-
-        # If agent pointing left 
-        elif agent_angle >= 225 and agent_angle < 360:
+        elif agent_angle >= 225 and agent_angle < 360:  # Pointing left
             agent.update_angle(-3)
             return
 
     # Check Bottom of Screen
     elif int(agent_pos.y) > (settings.HEIGHT - settings.SCREEN_MARGIN):
-        # if pointing down or right
-        if agent_angle >= 45 and agent_angle <= 180:
+        if agent_angle >= 45 and agent_angle <= 180:  # Pointing down or right
             agent.update_angle(-3)
             return
-
-        # if pointing left
-        elif agent_angle <= 315 and agent_angle > 180:
+        elif agent_angle <= 315 and agent_angle > 180:  # Pointing left
             agent.update_angle(3)
             return
 
     # Check Left of Screen
     if int(agent_pos.x) < settings.SCREEN_MARGIN:
-        # if pointing left or up
-        if agent_angle >= 270 or agent_angle <= 45:
+        if agent_angle >= 270 or agent_angle <= 45:  # Pointing left or up
             agent.update_angle(3)
             return
-
-        # if pointing down
-        elif agent_angle < 270 and agent_angle >= 135:
+        elif agent_angle < 270 and agent_angle >= 135:  # Pointing down
             agent.update_angle(-3)
             return
-    
+
     # Check Right of Screen
     elif int(agent_pos.x) > (settings.WIDTH - settings.SCREEN_MARGIN):
-        # if pointing right or up
-        if agent_angle >= 315 or agent_angle <= 90:
+        if agent_angle >= 315 or agent_angle <= 90:  # Pointing right or up
             agent.update_angle(-3)
             return
-        # if pointing down
-        elif agent_angle <= 225 and agent_angle > 90:
+        elif agent_angle <= 225 and agent_angle > 90:  # Pointing down
             agent.update_angle(3)
             return
-        
 
-'''
-Function to give multi-directional movement to a specific agent
-'''
+
 def get_user_input(keys, agent: Boid) -> None:
+    ''' 
+    Processes user keyboard input to control the agent.
+    WASD keys adjust speed and rotation: 
+    - W: Increase speed
+    - S: Decrease speed
+    - A: Rotate left
+    - D: Rotate right
+    '''
     if keys[pygame.K_w]:  # Increase speed (forward)
         agent.set_speed(min(agent.get_speed() + 0.1, 5))  # Max speed of 5
-        
+
     if keys[pygame.K_s]:  # Decrease speed (reverse)
-        agent.set_speed(max(agent.get_speed() - 0.1, 0.1))  # Minimum Speed is 0 (Stationary)
-        
+        agent.set_speed(max(agent.get_speed() - 0.1, 0.1))  # Minimum speed is 0.1 (Stationary)
+
     if keys[pygame.K_a]:  # Rotate left
         agent.update_angle(-3)  # Rotate left by 3 degrees
-        
+
     if keys[pygame.K_d]:  # Rotate right
         agent.update_angle(3)  # Rotate right by 3 degrees
 
-    # Optionally display boid metrics for debugging
-    # agent.display_boid_metrics()
 
-'''
-Function to display FPS Count onto Screen
-'''
-# FPS Counter surface
 def get_fps() -> str:
+    ''' 
+    Renders the current FPS as a text surface.
+    This function retrieves the FPS count from the clock 
+    and creates a rendered surface to display it on the screen.
+    '''
     return settings.FPS_FONT.render(f"FPS: {int(settings.CLOCK.get_fps())}", 0, settings.BOID_COLOR)
 
 
-'''
-Function to Check if Window Size is Beyond Allowed Minimum Limit
-'''
 def check_window_resize(event) -> None:
+    ''' 
+    Handles resizing of the game window.
+    Ensures the resized window does not go below a minimum width and height,
+    and updates the settings accordingly.
+    '''
     settings.WIDTH, settings.HEIGHT = event.size  # Get new width and height from the resize event
     if settings.WIDTH < 600:
         settings.WIDTH = 600
     if settings.HEIGHT < 400:
         settings.HEIGHT = 400
-    settings.SCREEN = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
-    
+    settings.SCREEN = pygame.display.set_mode(
+        (settings.WIDTH, settings.HEIGHT),
+        pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE
+    )
