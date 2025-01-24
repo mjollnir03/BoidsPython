@@ -2,7 +2,7 @@ from imports import *
 import settings
 from boid import Boid
 
-def check_screen_margin(agent: Boid) -> None:
+def check_screen_margin(agent: Boid) -> bool:
     ''' 
     Adjusts the agent's angle to steer it away from the screen bounds.
     This function detects if the agent is too close to the screen edges 
@@ -94,3 +94,22 @@ def check_window_resize(event) -> None:
         (settings.WIDTH, settings.HEIGHT),
         pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE
     )
+
+def random_movement(agent: Boid) -> None:
+    rv1 = random.randint(1,4)
+    rv2 = random.randint(1,4)
+
+    if rv1 != rv2:
+        return
+
+    if rv1 == rv2 == 1:  # Increase speed (forward)
+        agent.set_speed(min(agent.get_speed() + 0.2, 5))  # Max speed of 5
+
+    elif rv1 == rv2 == 2:  # Decrease speed (reverse)
+        agent.set_speed(max(agent.get_speed() - 0.2, 0.2))  # Minimum speed is 0.1 (Stationary)
+
+    elif rv1 == rv2 == 3:  # Rotate left
+        agent.update_angle(-5)  # Rotate left by 3 degrees
+
+    elif rv1 == rv2 == 4:  # Rotate right
+        agent.update_angle(5)  # Rotate right by 3 degrees
