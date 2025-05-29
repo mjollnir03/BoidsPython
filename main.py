@@ -23,9 +23,8 @@ while True:
     Instead of user input, random movement will be implemented
     get_user_input(keys, agent1)
     '''
-    t1 = threading.Thread(target=random_movement, args=(agent1,))
-    t1.start()
-    
+
+    random_movement(agent1)
     
     # Check for screen margins and adjust Boid's angle if necessary
     check_screen_margin(agent1)
@@ -44,5 +43,3 @@ while True:
     
     # Limit the frame rate
     settings.CLOCK.tick(60)
-
-    t1.join()

@@ -16,7 +16,9 @@ SCREEN_BACKGROUND_COLOR = (0,0,0)
 FPS_FONT = pygame.font.SysFont("Arial" , 18 )
 
 # DISPLAY SETUP
+# ICON = pygame.image.load("")
 pygame.display.set_caption("Flocking Simulation") 
+# pygame.display.set_icon()
 DISPLAY_INFO = pygame.display.Info()
 
 SCREEN_MARGIN = 25
