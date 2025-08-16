@@ -53,27 +53,6 @@ class Boid:
         rotated_rect = rotated_surface.get_rect(center=(self.__position.x, self.__position.y))
         settings.SCREEN.blit(rotated_surface, rotated_rect)
 
-    def display_boid_metrics(self) -> None:
-        '''Display the Boid's metrics for debugging purposes.'''
-        print(f"Current Angle: {self.__angle}")
-        print(f"Current Direction: {self.__direction}")
-        print(f"Current Position: {self.__position}")
-        print(f"Current Speed: {self.__speed}\n")
-        pygame.draw.rect(settings.SCREEN, (255, 0, 0), self.__rotated_rect, 1)
-
-    # Placeholder methods for future implementation
-    def separation(self) -> None:
-        '''Handle separation behavior (to be implemented).'''
-        pass
-
-    def alignment(self) -> None:
-        '''Handle alignment behavior (to be implemented).'''
-        pass
-
-    def cohesion(self) -> None:
-        '''Handle cohesion behavior (to be implemented).'''
-        pass
-
     # Getters and Setters
     def get_position(self) -> Vector2:
         '''Return the current position of the Boid.'''

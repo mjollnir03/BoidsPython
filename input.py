@@ -3,10 +3,12 @@ import settings
 from functions import *
 
 
-class Screen:
-    # Handles 
+class Input:
+    # To handle future user input
 
     def __init__(self):
         pass
+
+    
 
     pass

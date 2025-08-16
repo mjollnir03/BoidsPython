@@ -3,9 +3,16 @@ import settings
 from boid import Boid
 from functions import *
 
-# Initialize the boid at the center
-agent1_position = (settings.WIDTH // 2, settings.HEIGHT // 2)
-agent1 = Boid(15, settings.BOID_COLOR, agent1_position)
+# # Initialize the boids at the center
+agent_position = (settings.WIDTH // 2, settings.HEIGHT // 2)
+
+# Create 10 Boid Agents 
+agents = list()
+
+for i in range(10):
+    a = Boid(15, settings.BOID_COLOR, agent_position)
+    agents.append(a)
+
 
 while True:
     for event in pygame.event.get():
@@ -17,24 +24,15 @@ while True:
 
     settings.WIDTH, settings.HEIGHT = settings.SCREEN.get_size()
 
-    # Get user input and update Boid
-    keys = pygame.key.get_pressed()
-    '''
-    Instead of user input, random movement will be implemented
-    get_user_input(keys, agent1)
-    '''
-
-    random_movement(agent1)
-    
-    # Check for screen margins and adjust Boid's angle if necessary
-    check_screen_margin(agent1)
-    
     # Fill the screen with the background color
     settings.SCREEN.fill(settings.SCREEN_BACKGROUND_COLOR)
+
+    for agent in agents:
+        random_movement(agent)
+        check_screen_margin(agent)
+        agent.draw_boid()
     
-    # Draw the boid
-    agent1.draw_boid()
-    
+
     # Display FPS 
     settings.SCREEN.blit(get_fps(), (0, 0))
     

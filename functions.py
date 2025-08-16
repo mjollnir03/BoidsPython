@@ -2,6 +2,7 @@ from imports import *
 import settings
 from boid import Boid
 
+
 def check_screen_margin(agent: Boid) -> bool:
     ''' 
     Adjusts the agent's angle to steer it away from the screen bounds.
@@ -95,6 +96,7 @@ def check_window_resize(event) -> None:
         pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE
     )
 
+
 def random_movement(agent: Boid) -> None:
     rv1 = random.randint(1,4)
     rv2 = random.randint(1,4)
@@ -113,3 +115,4 @@ def random_movement(agent: Boid) -> None:
 
     elif rv1 == rv2 == 4:  # Rotate right
         agent.update_angle(5)  # Rotate right by 3 degrees
+
