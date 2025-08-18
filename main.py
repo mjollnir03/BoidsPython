@@ -1,43 +1,74 @@
 from imports import *
-import settings
-from boid import Boid
+from settings import Settings
 from functions import *
+from flock import Flock
 
-# # Initialize the boids at the center
-agent_position = (settings.WIDTH // 2, settings.HEIGHT // 2)
+class Main:
+    '''
+    Main Program
+    '''
+    
+    def __init__(self): 
+        # Screen, Input, Flock
+        self.settings = Settings()
+        self.screen = pygame.display.set_mode((self.settings.WIDTH, self.settings.HEIGHT), HWSURFACE | DOUBLEBUF | RESIZABLE)
+        self.flock = Flock(self.settings)
 
-# Create 10 Boid Agents 
-agents = list()
+    def run(self) -> None:
+        # Main Game Loop
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                elif event.type == pygame.VIDEORESIZE: 
+                    self.__check_window_resize(event)
 
-for i in range(10):
-    a = Boid(15, settings.BOID_COLOR, agent_position)
-    agents.append(a)
+            # Fill the screen with the background color
+            self.screen.fill(self.settings.SCREEN_BACKGROUND_COLOR)
+
+            # Update Flock of Boids
+            self.flock.update_flock(self.screen)
+            
+            # Display FPS 
+            self.screen.blit(self.__get_fps(), (0, 0))
+            
+            # Update the display
+            pygame.display.flip()    
+            
+            # Limit the frame rate
+            self.settings.CLOCK.tick(60)
 
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
-        elif event.type == pygame.VIDEORESIZE: 
-            check_window_resize(event)
+    def __get_fps(self) -> str:
+        ''' 
+        Renders the current FPS as a text surface.
+        This function retrieves the FPS count from the clock 
+        and creates a rendered surface to display it on the screen.
+        '''
+        return self.settings.FPS_FONT.render(f"FPS: {int(self.settings.CLOCK.get_fps())}", 0, self.settings.BOID_COLOR)
 
-    settings.WIDTH, settings.HEIGHT = settings.SCREEN.get_size()
 
-    # Fill the screen with the background color
-    settings.SCREEN.fill(settings.SCREEN_BACKGROUND_COLOR)
+    def __check_window_resize(self, event: pygame.event.Event,) -> None:
+        ''' 
+        Handles resizing of the game window.
+        Ensures the resized window does not go below a minimum width and height,
+        and updates the settings accordingly.
+        '''
+        self.settings.WIDTH, self.settings.HEIGHT = event.size  # Get new width and height from the resize event
+        if self.settings.WIDTH < 600:
+            self.settings.WIDTH = 600
+        if self.settings.HEIGHT < 400:
+            self.settings.HEIGHT = 400
+        self.screen = pygame.display.set_mode(
+            (self.settings.WIDTH, self.settings.HEIGHT),
+            pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE
+        )
 
-    for agent in agents:
-        random_movement(agent)
-        check_screen_margin(agent)
-        agent.draw_boid()
+        self.settings.WIDTH, self.settings.HEIGHT = self.screen.get_size()
+
     
 
-    # Display FPS 
-    settings.SCREEN.blit(get_fps(), (0, 0))
-    
-    # Update the display
-    pygame.display.flip()    
-    
-    # Limit the frame rate
-    settings.CLOCK.tick(60)
+# Start Simulation
+main = Main()
+main.run()

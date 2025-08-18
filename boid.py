@@ -1,5 +1,4 @@
 from imports import *
-import settings
 
 class Boid:
     '''
@@ -46,12 +45,12 @@ class Boid:
         self.__angle %= 360  # Keep angle within 0-359 degrees
         self.__direction = Vector2(0, -1).rotate(self.__angle)
 
-    def draw_boid(self) -> None:
+    def draw_boid(self, screen: pygame.Surface) -> None:
         '''Draw the Boid on the screen with its current rotation and position.'''
         self.__update_position()
         rotated_surface = pygame.transform.rotate(self.__base_surface, -self.__angle) # Negative Angle plugged in (refer to notes)
         rotated_rect = rotated_surface.get_rect(center=(self.__position.x, self.__position.y))
-        settings.SCREEN.blit(rotated_surface, rotated_rect)
+        screen.blit(rotated_surface, rotated_rect)
 
     # Getters and Setters
     def get_position(self) -> Vector2:
