@@ -1,7 +1,7 @@
 # MODULE IMPORTS
 import pygame
 from pygame.locals import *
-from math import ceil
+from math import atan2, degrees, ceil
 import random
 from typing import List, Tuple
 from pygame.math import Vector2

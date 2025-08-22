@@ -5,11 +5,11 @@ from flock import Flock
 
 class Main:
     '''
-    Main Program
+    Program entry point and simulation loop.
     '''
     
     def __init__(self): 
-        # Screen, Input, Flock
+        # 
         self.settings = Settings()
         self.screen = pygame.display.set_mode((self.settings.WIDTH, self.settings.HEIGHT), HWSURFACE | DOUBLEBUF | RESIZABLE)
         self.flock = Flock(self.settings)
